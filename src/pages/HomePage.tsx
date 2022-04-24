@@ -33,6 +33,7 @@ export default function HomePage(props: Props) {
           price={listadoProducto.price}
           id={listadoProducto.id}
           thumbnail={listadoProducto.thumbnail}
+          permalink={listadoProducto.permalink}
         />
       )}
     </>

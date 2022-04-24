@@ -49,6 +49,7 @@ export default function ProductPage(props: Props) {
         <p>{productInfo.title}</p>
         <p>{productInfo.price}</p>
         <div>{showPictures()}</div>
+        <button onClick={() => window.open(productInfo.permalink, '_blank')}>Buy</button>
       </div>
     </>
   )

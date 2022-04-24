@@ -6,6 +6,7 @@ interface Props {
   name: string;
   price: string;
   thumbnail: string;
+  permalink: string;
 }
 
 export default function ProductComponent(props: Props) {
@@ -18,7 +19,7 @@ export default function ProductComponent(props: Props) {
         <p>{props.name}</p>
         <p>{props.price}</p>
         <p>
-          <button>Buy</button>
+          <button onClick={() => window.open(props.permalink, '_blank')}>Buy</button>
           &nbsp;
           <button onClick={() => navigate(`${RoutePath.PRODUCT}/${props.id}`)}>Details</button>
         </p>
