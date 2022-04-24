@@ -28,17 +28,17 @@ export default function HomePage(props: Props) {
   return (
     <>
       <h1>Home</h1>
-      {productList.map(listadoProducto =>
+      {productList.map(product =>
         <>
           <ProductComponent
-            key={listadoProducto.id}
-            name={listadoProducto.title}
-            price={listadoProducto.price}
-            id={listadoProducto.id}
-            thumbnail={listadoProducto.thumbnail}
-            permalink={listadoProducto.permalink}
+            key={product.id}
+            name={product.title}
+            price={product.price}
+            id={product.id}
+            thumbnail={product.thumbnail}
+            permalink={product.permalink}
           />
-          {productLastItem !== listadoProducto && (
+          {productLastItem !== product && (
             <>
               <hr />
             </>
