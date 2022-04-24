@@ -22,7 +22,7 @@ const FormInputComponent = (props: FormInputComponentProps): JSX.Element => {
       <label>
         {props.label}
         &nbsp;
-        <input type={props.type} {...props.register} />
+        <input className="formInput" type={props.type} {...props.register} />
       </label>
       &nbsp;
       {props.errors?.type === 'required' && 'This input is required.'}
@@ -66,7 +66,7 @@ export default function RegisterPage(props: Props) {
       <div>
         <form onSubmit={handleSubmit(onSubmit)}>
           {renderInputs()}
-          <button type="submit">Register</button>
+          <button className="formButton" type="submit">Register</button>
         </form>
       </div>
     </>
