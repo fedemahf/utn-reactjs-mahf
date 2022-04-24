@@ -1,27 +1,26 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { RoutePath } from "./RoutesComponent";
 
 interface Props {
   id: string;
   name: string;
   price: string;
-  description?: string;
-  children?: any;
   thumbnail: string;
 }
 
 export default function ProductComponent(props: Props) {
+  const navigate = useNavigate();
+
   return (
     <>
       <div>
         <img alt={props.name} src={props.thumbnail}></img>
         <p>{props.name}</p>
         <p>{props.price}</p>
-        <p>{props?.description || ''}</p>
-        {props?.children}
         <p>
           <button>Buy</button>
           &nbsp;
-          <Link to={`/product/${props.id}`}><button>Details</button></Link>
+          <button onClick={() => navigate(`${RoutePath.PRODUCT}/${props.id}`)}>Details</button>
         </p>
       </div>
     </>
