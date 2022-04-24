@@ -5,10 +5,13 @@ interface Props {}
 
 export default function MenuComponent(props: Props) {
   return (
-    <ul>
-      <li><Link to={RoutePath.HOME}>Home</Link></li>
-      <li><Link to={RoutePath.REGISTER}>Register</Link></li>
-      <li><Link to={RoutePath.LOGIN}>Login</Link></li>
-    </ul>
+    <>
+      <ul>
+        <li><Link to={RoutePath.HOME}>Home</Link></li>
+        <li><Link to={RoutePath.REGISTER}>Register</Link></li>
+        <li><Link to={RoutePath.LOGIN}>Login</Link></li>
+      </ul>
+      <hr />
+    </>
   );
 }
