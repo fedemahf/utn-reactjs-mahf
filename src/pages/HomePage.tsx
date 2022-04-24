@@ -11,7 +11,7 @@ export default function HomePage(props: Props) {
   useEffect(() => {
     if (isLoading) {
       MercadoPagoAPI
-        .getProductsByName({ text: "iphone", limit: 10 })
+        .getProductsByName({ text: "iphone", limit: 5 })
         .then(response => {
           setProductList(response.data.results);
           setIsLoading(false);
