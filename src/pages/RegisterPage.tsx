@@ -21,6 +21,7 @@ const FormInputComponent = (props: FormInputComponentProps): JSX.Element => {
     <div>
       <label>
         {props.label}
+        &nbsp;
         <input type={props.type} {...props.register} />
       </label>
       &nbsp;
