@@ -18,7 +18,7 @@ export default function ProductPage(props: Props) {
           setProductInfo(response.data);
           // console.log('response.data', response.data);
         })
-        .catch(error => setError(error.response.data.message))
+        .catch(error => setError(error.response.data.error))
         .finally(() => setIsLoading(false));
     }
   }, [isLoading, paramProductId]);
@@ -39,7 +39,7 @@ export default function ProductPage(props: Props) {
   }
 
   if (error !== '') {
-    return <p>{error}</p>;
+    return <p>Error: {error}</p>;
   }
 
   return (
@@ -47,7 +47,7 @@ export default function ProductPage(props: Props) {
       <h1>Product</h1>
       <div>
         <p>{productInfo.title}</p>
-        <p>{productInfo.price}</p>
+        <p>Price: {productInfo.price}</p>
         <div>{showPictures()}</div>
         <button className="formButton" onClick={() => window.open(productInfo.permalink, '_blank')}>Buy</button>
       </div>

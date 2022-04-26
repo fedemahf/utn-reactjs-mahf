@@ -17,7 +17,7 @@ export default function ProductComponent(props: Props) {
       <div>
         <img alt={props.name} src={props.thumbnail}></img>
         <p>{props.name}</p>
-        <p>{props.price}</p>
+        <p>Price: {props.price}</p>
         <p>
           <button className="formButton" onClick={() => window.open(props.permalink, '_blank')}>Buy</button>
           &nbsp;
