@@ -1,12 +1,19 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+// https://firebase.google.com/docs/web/setup
+import { FirebaseApp, initializeApp } from "firebase/app";
+
+// https://firebase.google.com/docs/auth/web/start
+import { getAuth, createUserWithEmailAndPassword, Auth } from "firebase/auth";
+
+// https://firebase.google.com/docs/firestore/quickstart
+import { Firestore, getFirestore, collection, addDoc } from "firebase/firestore";
 
 class FirebaseAPI {
+  private app: FirebaseApp;
+  private db: Firestore;
+  private auth: Auth;
+
   constructor () {
-    // Your web app's Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyBaqHA1ZIdAraX8FCxTkSIZufKxD0vsJm0",
       authDomain: "utn-reactjs-8ddb3.firebaseapp.com",
@@ -15,29 +22,26 @@ class FirebaseAPI {
       messagingSenderId: "749649779873",
       appId: "1:749649779873:web:8ef6c4b40e57c3765ca4e0"
     };
-    
+
     // Initialize Firebase
-    // const app = initializeApp(firebaseConfig);
-    initializeApp(firebaseConfig);
+    this.app = initializeApp(firebaseConfig);
+    this.db = getFirestore(this.app);
+    this.auth = getAuth(this.app);
   }
 
-  async createUser (email: string, password: string) {
-    const auth = getAuth();
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  /**
+   * Create a user with email and password
+   * @param email User email
+   * @param password User password
+   * @throws object: {code: string, message: string}
+   * @returns The user ID
+   */
+  public async createUser (email: string, password: string): Promise<string> {
+    const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
     const user = userCredential.user;
     console.log('user:');
     console.log(user);
-
-    // if(user.uid) {
-    //     // firebase.firestore().collection("usuarios")
-    //     const document = await firebase.db.collection("usuarios")
-    //     .add({
-    //         name:data.nombre,
-    //         lastname:data.apellido,
-    //         userId:responseUser.user.uid
-    //     })
-    //     console.log("document",document)
-    // }
+    return user.uid;
 
     // implement error handling:
     // const errorCode = error.code;
@@ -45,6 +49,30 @@ class FirebaseAPI {
     // console.log('error', errorCode);
     // console.error(errorMessage);
   }
+
+  /**
+   * Save the user in the database
+   * @param uid User unique ID
+   * @param firstName First name
+   * @param lastName Last name
+   * @throws An error string
+   * @returns The written document ID
+   */
+  public async saveUser (uid: string, firstName: string, lastName: string): Promise<string> {
+    const docRef = await addDoc(collection(this.db, "users"), {
+      uid: uid,
+      firstName: firstName,
+      lastName: lastName
+    });
+
+    // console.log("Document written with ID: ", docRef.id);
+
+    // implement error handling:
+    // console.error("Error adding document: ", e);
+
+    return docRef.id;
+  }
+
 }
 
 export default new FirebaseAPI();

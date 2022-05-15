@@ -45,16 +45,26 @@ export default function RegisterPage(props: Props) {
   ];
 
   const onSubmit: SubmitHandler<IFormInput> = async data => {
+    let uid: string | undefined;
+
     try {
-      await FirebaseAPI.createUser(data.email, data.password);
-      alert(`Registered as ${data.firstName} ${data.lastName}! Email: ${data.email}`);
-      navigate(RoutePath.HOME);
+      uid = await FirebaseAPI.createUser(data.email, data.password);
     } catch (error: any) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log('error', errorCode);
-      console.error(errorMessage);
-      alert(`Error! ${errorMessage}`);
+      console.error(error.code);
+      console.error(error.message);
+      alert(`Error creating user! ${error.message}`);
+    }
+
+    if (uid) {
+      try {
+        const documentId = await FirebaseAPI.saveUser(uid, data.firstName, data.lastName);
+        console.log("Document written with ID: ", documentId);
+        alert(`Registered as ${data.firstName} ${data.lastName}! Email: ${data.email}`);
+        navigate(RoutePath.HOME);
+      } catch (error) {
+        console.error("Error adding document: ", error);
+        alert(`Error adding document! ${error}`);
+      }
     }
   };
 
