@@ -1,12 +1,13 @@
 import { useForm, SubmitHandler, UseFormRegisterReturn } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { RoutePath } from "../components/RoutesComponent";
+import FirebaseAPI from "../services/FirebaseAPI"
 
 interface IFormInput {
-  firstName: String;
-  lastName: String;
-  email: String;
-  password: String;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
 };
 
 interface FormInputComponentProps {
@@ -43,9 +44,18 @@ export default function RegisterPage(props: Props) {
     {label: 'Password', name: 'password', type: 'password'}
   ];
 
-  const onSubmit: SubmitHandler<IFormInput> = data => {
-    alert(`Registered as ${data.firstName} ${data.lastName}!`);
-    navigate(RoutePath.HOME);
+  const onSubmit: SubmitHandler<IFormInput> = async data => {
+    try {
+      await FirebaseAPI.createUser(data.email, data.password);
+      alert(`Registered as ${data.firstName} ${data.lastName}! Email: ${data.email}`);
+      navigate(RoutePath.HOME);
+    } catch (error: any) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log('error', errorCode);
+      console.error(errorMessage);
+      alert(`Error! ${errorMessage}`);
+    }
   };
 
   const renderInputs = () => {
