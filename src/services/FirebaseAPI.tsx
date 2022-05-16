@@ -1,12 +1,33 @@
 // Import the functions you need from the SDKs you need
 // https://firebase.google.com/docs/web/setup
-import { FirebaseApp, initializeApp } from "firebase/app";
+import {
+  FirebaseApp,
+  initializeApp
+} from "firebase/app";
 
 // https://firebase.google.com/docs/auth/web/start
-import { getAuth, createUserWithEmailAndPassword, Auth, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  Auth,
+  signInWithEmailAndPassword
+} from "firebase/auth";
 
 // https://firebase.google.com/docs/firestore/quickstart
-import { Firestore, getFirestore, collection, addDoc, getDocs, query, where, limit, CollectionReference, DocumentData } from "firebase/firestore";
+import {
+  Firestore,
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  where,
+  limit,
+  CollectionReference,
+  DocumentData,
+  getDoc,
+  doc
+} from "firebase/firestore";
 
 export interface FirebaseUserData {
   uid: string;
@@ -14,11 +35,19 @@ export interface FirebaseUserData {
   lastName: string;
 }
 
+export interface FirebaseProductData {
+  uid?: string;
+  name: string;
+  description: string;
+  price: number;
+}
+
 class FirebaseAPI {
   private app: FirebaseApp;
   private db: Firestore;
   private auth: Auth;
   private usersCollection: CollectionReference<DocumentData>;
+  private productsCollection: CollectionReference<DocumentData>;
 
   constructor () {
     const firebaseConfig = {
@@ -35,6 +64,7 @@ class FirebaseAPI {
     this.db = getFirestore(this.app);
     this.auth = getAuth(this.app);
     this.usersCollection = collection(this.db, "users");
+    this.productsCollection = collection(this.db, "products");
   }
 
   /**
@@ -103,6 +133,47 @@ class FirebaseAPI {
       uid: uid,
       firstName: userData.firstName,
       lastName: userData.lastName
+    };
+  }
+
+  /**
+   * Save the product in the database
+   * 
+   * @param data FirebaseProductData object
+   * @throws An error string
+   * @returns The written document ID
+   */
+  public async saveProduct (data: FirebaseProductData): Promise<string> {
+    const docRef = await addDoc(this.productsCollection, {
+      name: data.name,
+      description: data.description,
+      price: data.price
+    });
+    return docRef.id;
+  }
+
+  /**
+   * Read the product information from database
+   * @param uid Product unique ID
+   * @throws An error string
+   * @returns FirebaseProductData object
+   */
+  public async readProduct (uid: string): Promise<FirebaseProductData> {
+    const result = await getDoc(
+      doc(this.db, `${this.productsCollection.path}/${uid}`)
+    );
+
+    if (!result.exists()) {
+      throw new Error("Product not found");
+    }
+
+    const userData = result.data();
+
+    return {
+      uid: uid,
+      name: userData.name,
+      description: userData.description,
+      price: userData.price
     };
   }
 }
