@@ -8,6 +8,12 @@ import { getAuth, createUserWithEmailAndPassword, Auth, signInWithEmailAndPasswo
 // https://firebase.google.com/docs/firestore/quickstart
 import { Firestore, getFirestore, collection, addDoc, getDocs, query, where, limit, CollectionReference, DocumentData } from "firebase/firestore";
 
+export interface FirebaseUserData {
+  uid: string;
+  firstName: string;
+  lastName: string;
+}
+
 class FirebaseAPI {
   private app: FirebaseApp;
   private db: Firestore;
@@ -41,10 +47,6 @@ class FirebaseAPI {
   public async createUser (email: string, password: string): Promise<string> {
     const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
     return userCredential.user.uid;
-
-    // implement error handling:
-    // const errorCode = error.code;
-    // const errorMessage = error.message;
   }
 
   /**
@@ -61,12 +63,6 @@ class FirebaseAPI {
       firstName: firstName,
       lastName: lastName
     });
-
-    // console.log("Document written with ID: ", docRef.id);
-
-    // implement error handling:
-    // console.error("Error adding document: ", e);
-
     return docRef.id;
   }
 
@@ -80,19 +76,15 @@ class FirebaseAPI {
   public async loginUser (email: string, password: string) {
     const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
     return userCredential.user.uid;
-
-    // implement error handling:
-    // const errorCode = error.code;
-    // const errorMessage = error.message;
   }
 
   /**
    * Read the user information from database
    * @param uid User unique ID
    * @throws An error string
-   * @returns object: {uid: string, firstName: string, lastName: string}
+   * @returns FirebaseUserData object
    */
-  public async readUser (uid: string) {
+  public async readUser (uid: string): Promise<FirebaseUserData> {
     const querySnapshot = await getDocs(
       query(
         this.usersCollection,
