@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
+import ProductAddPage from "../pages/ProductAddPage";
 import ProductPage from "../pages/ProductPage";
 import RegisterPage from "../pages/RegisterPage";
 import MenuComponent from "./MenuComponent";
@@ -16,7 +17,8 @@ export enum RoutePath {
   HOME = '/',
   REGISTER = '/register',
   LOGIN = '/login',
-  PRODUCT = '/product'
+  PRODUCT_ADD = '/product/add',
+  PRODUCT = '/product',
 }
 
 export default function RoutesComponent(props: Props) {
@@ -27,6 +29,7 @@ export default function RoutesComponent(props: Props) {
         <Route path={RoutePath.HOME} element={<HomePage />}/>
         <Route path={RoutePath.REGISTER} element={<RegisterPage />} />
         <Route path={RoutePath.LOGIN} element={<LoginPage />} />
+        <Route path={RoutePath.PRODUCT_ADD} element={<ProductAddPage />} />
         <Route path={`${RoutePath.PRODUCT}/:paramProductId`} element={<ProductPage />} />
         <Route
             path="*"
