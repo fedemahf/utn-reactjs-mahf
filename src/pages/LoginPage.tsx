@@ -37,6 +37,7 @@ export default function LoginPage(props: Props) {
   const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
   const navigate = useNavigate();
   const context = React.useContext(AuthContext);
+  const [didSubmit, setDidSubmit] = React.useState<boolean>(false);
 
   const inputs = [
     {label: 'Email', name: 'email', type: 'text'},
@@ -44,7 +45,13 @@ export default function LoginPage(props: Props) {
   ];
 
   const onSubmit: SubmitHandler<IFormInput> = async data => {
+    if (didSubmit) {
+      alert(`Form already submitted, please wait!`);
+      return;
+    }
+
     let uid: string | undefined;
+    setDidSubmit(true);
 
     try {
       uid = await FirebaseAPI.loginUser(data.email, data.password);
@@ -64,6 +71,8 @@ export default function LoginPage(props: Props) {
         alert(`Error reading user data! ${error}`);
       }
     }
+
+    setDidSubmit(false);
   };
 
   const renderInputs = () => {
@@ -84,7 +93,7 @@ export default function LoginPage(props: Props) {
       <div>
         <form onSubmit={handleSubmit(onSubmit)}>
           {renderInputs()}
-          <button className="formButton" type="submit">Login</button>
+          <button className="formButton" type="submit" disabled={didSubmit}>Login</button>
         </form>
       </div>
     </>

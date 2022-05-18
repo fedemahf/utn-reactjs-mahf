@@ -1,3 +1,4 @@
+import React from "react";
 import { useForm, SubmitHandler, UseFormRegisterReturn } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { RoutePath } from "../components/RoutesComponent";
@@ -35,7 +36,8 @@ interface Props {}
 
 export default function RegisterPage(props: Props) {
   const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
-  let navigate = useNavigate();
+  const navigate = useNavigate();
+  const [didSubmit, setDidSubmit] = React.useState<boolean>(false);
 
   const inputs = [
     {label: 'First name', name: 'firstName', type: 'text'},
@@ -45,7 +47,13 @@ export default function RegisterPage(props: Props) {
   ];
 
   const onSubmit: SubmitHandler<IFormInput> = async data => {
+    if (didSubmit) {
+      alert(`Form already submitted, please wait!`);
+      return;
+    }
+
     let uid: string | undefined;
+    setDidSubmit(true);
 
     try {
       uid = await FirebaseAPI.createUser(data.email, data.password);
@@ -66,6 +74,8 @@ export default function RegisterPage(props: Props) {
         alert(`Error adding document! ${error}`);
       }
     }
+
+    setDidSubmit(false);
   };
 
   const renderInputs = () => {
@@ -86,7 +96,7 @@ export default function RegisterPage(props: Props) {
       <div>
         <form onSubmit={handleSubmit(onSubmit)}>
           {renderInputs()}
-          <button className="formButton" type="submit">Register</button>
+          <button className="formButton" type="submit" disabled={didSubmit}>Register</button>
         </form>
       </div>
     </>
