@@ -14,7 +14,7 @@ export default function ProductComponent(props: Props) {
   return (
     <>
       <div>
-        <p><h3>{props.name}</h3></p>
+        <h3>{props.name}</h3>
         <p>{props.description}</p>
         <p>Price: {props.price}</p>
         <p>
