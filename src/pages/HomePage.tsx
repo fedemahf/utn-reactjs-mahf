@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom";
 import ProductComponent from "../components/ProductComponent";
+import { RoutePath } from "../components/RoutesComponent";
 import FirebaseAPI from "../services/FirebaseAPI";
 
 interface Props {}
@@ -30,15 +32,21 @@ export default function HomePage(props: Props) {
   return (
     <>
       <h1>Home</h1>
-      {productList.map(product =>
-        <ProductComponent
-          key={product.uid}
-          name={product.name}
-          description={product.description}
-          price={product.price}
-          id={product.uid}
-        />
-      )}
+      {
+        productList.length === 0 ? (
+          <p>There are no products to list! Why don't you <Link to={RoutePath.PRODUCT_ADD}>add one</Link>?</p>
+        ) : (
+          productList.map(product =>
+            <ProductComponent
+              key={product.uid}
+              name={product.name}
+              description={product.description}
+              price={product.price}
+              id={product.uid}
+            />
+          )
+        )
+      }
     </>
   )
 }
