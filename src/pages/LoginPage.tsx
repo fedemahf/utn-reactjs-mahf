@@ -1,7 +1,9 @@
+import React from "react";
 import { useForm, SubmitHandler, UseFormRegisterReturn } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { RoutePath } from "../components/RoutesComponent";
 import FirebaseAPI from "../services/FirebaseAPI";
+import AuthContext from '../context/AuthContext'
 
 interface Props {}
 
@@ -33,7 +35,8 @@ const FormInputComponent = (props: FormInputComponentProps): JSX.Element => {
 
 export default function LoginPage(props: Props) {
   const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
-  let navigate = useNavigate();
+  const navigate = useNavigate();
+  const context = React.useContext(AuthContext);
 
   const inputs = [
     {label: 'Email', name: 'email', type: 'text'},
@@ -54,6 +57,7 @@ export default function LoginPage(props: Props) {
       try {
         const userData = await FirebaseAPI.readUser(uid);
         alert(`Welcome ${userData.firstName} ${userData.lastName}!`);
+        context.logIn();
         navigate(RoutePath.HOME);
       } catch (error) {
         alert(`Error reading user data! ${error}`);
