@@ -45,6 +45,7 @@ export default function LoginPage(props: Props) {
 
   const onSubmit: SubmitHandler<IFormInput> = async data => {
     let uid: string | undefined;
+
     try {
       uid = await FirebaseAPI.loginUser(data.email, data.password);
     } catch (error: any) {
@@ -57,7 +58,7 @@ export default function LoginPage(props: Props) {
       try {
         const userData = await FirebaseAPI.readUser(uid);
         alert(`Welcome ${userData.firstName} ${userData.lastName}!`);
-        context.logIn();
+        context.logInUser(userData);
         navigate(RoutePath.HOME);
       } catch (error) {
         alert(`Error reading user data! ${error}`);
