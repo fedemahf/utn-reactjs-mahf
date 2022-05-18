@@ -13,6 +13,13 @@ Develop an ecommerce with the following pages:
 
 All data must persist in database. The use of Firebase is optional. You can develop your own REST APIs.
 
+## Features
+
+- Single Page Application
+- Firebase for data persistency
+- Local Storage local session persistency
+- Simple and minimal CSS
+
 ## Available Scripts
 
 In the project directory, you can run:
