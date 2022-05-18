@@ -87,11 +87,11 @@ class FirebaseAPI {
    * @throws An error string
    * @returns The written document ID
    */
-  public async saveUser (uid: string, firstName: string, lastName: string): Promise<string> {
+  public async saveUser (userData: FirebaseUserData): Promise<string> {
     const docRef = await addDoc(this.usersCollection, {
-      uid: uid,
-      firstName: firstName,
-      lastName: lastName
+      uid: userData.uid,
+      firstName: userData.firstName,
+      lastName: userData.lastName
     });
     return docRef.id;
   }

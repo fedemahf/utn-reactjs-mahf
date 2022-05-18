@@ -2,7 +2,8 @@ import React from "react";
 import { useForm, SubmitHandler, UseFormRegisterReturn } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { RoutePath } from "../components/RoutesComponent";
-import FirebaseAPI from "../services/FirebaseAPI"
+import AuthContext from "../context/AuthContext";
+import FirebaseAPI, { FirebaseUserData } from "../services/FirebaseAPI"
 
 interface IFormInput {
   firstName: string;
@@ -38,6 +39,7 @@ export default function RegisterPage(props: Props) {
   const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
   const navigate = useNavigate();
   const [didSubmit, setDidSubmit] = React.useState<boolean>(false);
+  const context = React.useContext(AuthContext);
 
   const inputs = [
     {label: 'First name', name: 'firstName', type: 'text'},
@@ -65,9 +67,11 @@ export default function RegisterPage(props: Props) {
 
     if (uid) {
       try {
-        const documentId = await FirebaseAPI.saveUser(uid, data.firstName, data.lastName);
+        const userData: FirebaseUserData = { uid: uid, firstName: data.firstName, lastName: data.lastName };
+        const documentId = await FirebaseAPI.saveUser(userData);
         console.log("Document written with ID: ", documentId);
         alert(`Registered as ${data.firstName} ${data.lastName}! Email: ${data.email}`);
+        context.logInUser(userData);
         navigate(RoutePath.HOME);
       } catch (error) {
         console.error("Error adding document: ", error);
