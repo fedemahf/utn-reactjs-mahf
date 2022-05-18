@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
+import { RoutePath } from "../components/RoutesComponent";
 import FirebaseAPI, { FirebaseProductData } from "../services/FirebaseAPI";
 
 interface Props {}
@@ -9,6 +10,8 @@ export default function ProductPage(props: Props) {
   const [productInfo, setProductInfo] = useState<FirebaseProductData>();
   const [error, setError] = useState<string>('');
   const { paramProductId } = useParams();
+  const [didDelete, setDidDelete] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isLoading && paramProductId) {
@@ -18,6 +21,15 @@ export default function ProductPage(props: Props) {
         .finally(() => setIsLoading(false));
     }
   }, [isLoading, paramProductId]);
+
+  const onClickDeleteButton = async () => {
+    setDidDelete(true);
+    if (productInfo?.uid) {
+      await FirebaseAPI.deleteProductById(productInfo.uid);
+      navigate(RoutePath.HOME);
+    }
+    setDidDelete(false);
+  }
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -35,6 +47,8 @@ export default function ProductPage(props: Props) {
         <p>{productInfo?.description}</p>
         <p>Price: {productInfo?.price}</p>
         <button className="formButton">Buy</button>
+        &nbsp;
+        <button className="formButton" onClick={onClickDeleteButton} disabled={didDelete}>Delete</button>
       </div>
     </>
   )

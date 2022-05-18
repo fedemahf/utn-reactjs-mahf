@@ -26,7 +26,8 @@ import {
   CollectionReference,
   DocumentData,
   getDoc,
-  doc
+  doc,
+  deleteDoc
 } from "firebase/firestore";
 
 export interface FirebaseUserData {
@@ -175,6 +176,16 @@ class FirebaseAPI {
       description: userData.description,
       price: userData.price
     };
+  }
+
+  /**
+   * Delete the product from database
+   * @param uid Product unique ID
+   */
+  public async deleteProductById (uid: string): Promise<void> {
+    await deleteDoc(
+      doc(this.db, `${this.productsCollection.path}/${uid}`)
+    );
   }
 
   /**
