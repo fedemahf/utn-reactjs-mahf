@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom"
 import { RoutePath } from "../components/RoutesComponent";
+import AuthContext from "../context/AuthContext";
 import FirebaseAPI, { FirebaseProductData } from "../services/FirebaseAPI";
 
 interface Props {}
@@ -12,6 +13,7 @@ export default function ProductPage(props: Props) {
   const { paramProductId } = useParams();
   const [didDelete, setDidDelete] = useState<boolean>(false);
   const navigate = useNavigate();
+  const context = useContext(AuthContext);
 
   useEffect(() => {
     if (isLoading && paramProductId) {
@@ -23,11 +25,17 @@ export default function ProductPage(props: Props) {
   }, [isLoading, paramProductId]);
 
   const onClickDeleteButton = async () => {
+    if (!context.isUserLoggedIn) {
+      throw new Error("User is not logged");
+    }
+
     setDidDelete(true);
+
     if (productInfo?.uid) {
       await FirebaseAPI.deleteProductById(productInfo.uid);
       navigate(RoutePath.HOME);
     }
+
     setDidDelete(false);
   }
 
@@ -47,8 +55,13 @@ export default function ProductPage(props: Props) {
         <p>{productInfo?.description}</p>
         <p>Price: {productInfo?.price}</p>
         <button className="formButton">Buy</button>
-        &nbsp;
-        <button className="formButton" onClick={onClickDeleteButton} disabled={didDelete}>Delete</button>
+        {
+          context.isUserLoggedIn && (
+            <>
+              {' '}<button className="formButton" onClick={onClickDeleteButton} disabled={didDelete}>Delete</button>
+            </>
+          )
+        }
       </div>
     </>
   )
