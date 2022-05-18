@@ -1,6 +1,17 @@
-# Getting Started with Create React App
+# UTN FRBA - React JS
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Final project for React JS professional training course of UTN FRBA.
+
+## Goal
+
+Develop an ecommerce with the following pages:
+
+- Home: list of 4 products with product detail (see below)
+- Product detail: product name, description, price, SKU
+- Register: fields Name, Surname, Email, Password
+- Login: by email and password
+
+All data must persist in database. The use of Firebase is optional. You can develop your own REST APIs.
 
 ## Available Scripts
 
