@@ -7,6 +7,7 @@ import {
 import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
 import ProductAddPage from "../pages/ProductAddPage";
+import ProductEditPage from "../pages/ProductEditPage";
 import ProductPage from "../pages/ProductPage";
 import RegisterPage from "../pages/RegisterPage";
 import MenuComponent from "./MenuComponent";
@@ -18,6 +19,7 @@ export enum RoutePath {
   REGISTER = '/register',
   LOGIN = '/login',
   PRODUCT_ADD = '/product/add',
+  PRODUCT_EDIT = '/product/edit',
   PRODUCT = '/product',
 }
 
@@ -30,6 +32,7 @@ export default function RoutesComponent(props: Props) {
         <Route path={RoutePath.REGISTER} element={<RegisterPage />} />
         <Route path={RoutePath.LOGIN} element={<LoginPage />} />
         <Route path={RoutePath.PRODUCT_ADD} element={<ProductAddPage />} />
+        <Route path={`${RoutePath.PRODUCT_EDIT}/:paramProductId`} element={<ProductEditPage />} />
         <Route path={`${RoutePath.PRODUCT}/:paramProductId`} element={<ProductPage />} />
         <Route
             path="*"

@@ -58,6 +58,7 @@ export default function ProductPage(props: Props) {
         {
           context.isUserLoggedIn && (
             <>
+              {' '}<button className="formButton" onClick={() => navigate(`${RoutePath.PRODUCT_EDIT}/${productInfo?.uid}`)}>Edit</button>
               {' '}<button className="formButton" onClick={onClickDeleteButton} disabled={didDelete}>Delete</button>
             </>
           )

@@ -27,7 +27,8 @@ import {
   DocumentData,
   getDoc,
   doc,
-  deleteDoc
+  deleteDoc,
+  updateDoc
 } from "firebase/firestore";
 
 export interface FirebaseUserData {
@@ -151,6 +152,26 @@ class FirebaseAPI {
       price: data.price
     });
     return docRef.id;
+  }
+
+  /**
+   * Read the product information from database
+   * @param data FirebaseProductData object
+   * @throws An error string
+   */
+  public async editProduct (data: FirebaseProductData): Promise<void> {
+    const productDocument = doc(this.db, `${this.productsCollection.path}/${data.uid}`)
+    const result = await getDoc(productDocument);
+
+    if (!result.exists()) {
+      throw new Error("Product not found");
+    }
+
+    await updateDoc(productDocument, {
+      name: data.name,
+      description: data.description,
+      price: data.price
+    });
   }
 
   /**
