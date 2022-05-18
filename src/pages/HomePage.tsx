@@ -1,23 +1,21 @@
 import { useEffect, useState } from "react"
 import ProductComponent from "../components/ProductComponent";
-import { MercadoPagoAPI } from "../services/MercadoPagoAPI";
+import FirebaseAPI from "../services/FirebaseAPI";
 
 interface Props {}
 
 export default function HomePage(props: Props) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [productList, setProductList] = useState<Array<any>>([]);
-  const [productLastItem, setProductLastItem] = useState<any>(undefined);
+  const [error, setError] = useState<string>('');
 
   useEffect(() => {
     if (isLoading) {
-      MercadoPagoAPI
-        .getProductsByName({ text: "iphone", limit: 5 })
-        .then(response => {
-          setProductList(response.data.results);
-          setProductLastItem(response.data.results[response.data.results.length - 1]);
-          setIsLoading(false);
-        });
+      FirebaseAPI
+        .getAllProducts()
+        .then(response => setProductList(response))
+        .catch(error => setError(error.message))
+        .finally(() => setIsLoading(false));
     }
   }, [isLoading]);
 
@@ -25,25 +23,21 @@ export default function HomePage(props: Props) {
     return <p>Loading...</p>;
   }
 
+  if (error !== '') {
+    return <p>Error: {error}</p>;
+  }
+
   return (
     <>
       <h1>Home</h1>
       {productList.map(product =>
-        <>
-          <ProductComponent
-            key={product.id}
-            name={product.title}
-            price={product.price}
-            id={product.id}
-            thumbnail={product.thumbnail}
-            permalink={product.permalink}
-          />
-          {productLastItem !== product && (
-            <>
-              <hr />
-            </>
-          )}
-        </>
+        <ProductComponent
+          key={product.uid}
+          name={product.name}
+          description={product.description}
+          price={product.price}
+          id={product.uid}
+        />
       )}
     </>
   )

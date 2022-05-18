@@ -176,6 +176,30 @@ class FirebaseAPI {
       price: userData.price
     };
   }
+
+  /**
+   * Read all the products from database
+   * @returns FirebaseProductData array
+   */
+  public async getAllProducts (): Promise<FirebaseProductData[]> {
+    const products: FirebaseProductData[] = [];
+
+    const result = await getDocs(
+      query(this.productsCollection)
+    );
+
+    result.forEach(doc => {
+      const docData = doc.data();
+      products.push({
+        uid: doc.id,
+        name: docData.name,
+        description: docData.description,
+        price: docData.price
+      });
+    })
+
+    return products;
+  }
 }
 
 export default new FirebaseAPI();
