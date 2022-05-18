@@ -1,38 +1,23 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
-import { MercadoPagoAPI } from "../services/MercadoPagoAPI";
+import FirebaseAPI, { FirebaseProductData } from "../services/FirebaseAPI";
 
 interface Props {}
 
 export default function ProductPage(props: Props) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [productInfo, setProductInfo] = useState<any>(undefined);
+  const [productInfo, setProductInfo] = useState<FirebaseProductData>();
   const [error, setError] = useState<string>('');
   const { paramProductId } = useParams();
 
   useEffect(() => {
     if (isLoading && paramProductId) {
-      MercadoPagoAPI
-        .getProductById(paramProductId)
-        .then(response => {
-          setProductInfo(response.data);
-          // console.log('response.data', response.data);
-        })
-        .catch(error => setError(error.response.data.error))
+      FirebaseAPI.readProduct(paramProductId)
+        .then(response => setProductInfo(response))
+        .catch(error => setError(error.message))
         .finally(() => setIsLoading(false));
     }
   }, [isLoading, paramProductId]);
-
-  const showPictures = () => {
-    return productInfo.pictures.map((picture: any) => (
-      <img
-        key={picture.id}
-        alt={productInfo.title}
-        src={picture.secure_url}
-        style={{maxWidth: 100, maxHeight: 100}}
-      />
-    ));
-  };
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -46,10 +31,10 @@ export default function ProductPage(props: Props) {
     <>
       <h1>Product</h1>
       <div>
-        <p>{productInfo.title}</p>
-        <p>Price: {productInfo.price}</p>
-        <div>{showPictures()}</div>
-        <button className="formButton" onClick={() => window.open(productInfo.permalink, '_blank')}>Buy</button>
+        <p>{productInfo?.name}</p>
+        <p>{productInfo?.description}</p>
+        <p>Price: {productInfo?.price}</p>
+        <button className="formButton">Buy</button>
       </div>
     </>
   )

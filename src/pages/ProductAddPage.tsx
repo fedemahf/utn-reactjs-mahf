@@ -45,7 +45,7 @@ export default function ProductAddPage(props: Props) {
   const onSubmit: SubmitHandler<IFormInput> = async data => {
     try {
       const documentId = await FirebaseAPI.saveProduct(data);
-      alert(`Document created with ID: ${documentId}`);
+      alert('Document created! You are going to be redirected to the product page.');
       navigate(`${RoutePath.PRODUCT}/${documentId}`);
     } catch (error: any) {
       alert(`Error saving product! ${error}`);
