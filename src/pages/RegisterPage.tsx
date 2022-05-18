@@ -58,7 +58,7 @@ export default function RegisterPage(props: Props) {
     setDidSubmit(true);
 
     try {
-      uid = await FirebaseAPI.createUser(data.email, data.password);
+      uid = await FirebaseAPI.insertUser(data.email, data.password);
     } catch (error: any) {
       console.error(error.code);
       console.error(error.message);
@@ -68,7 +68,7 @@ export default function RegisterPage(props: Props) {
     if (uid) {
       try {
         const userData: FirebaseUserData = { uid: uid, firstName: data.firstName, lastName: data.lastName };
-        const documentId = await FirebaseAPI.saveUser(userData);
+        const documentId = await FirebaseAPI.insertUserData(userData);
         console.log("Document written with ID: ", documentId);
         alert(`Registered as ${data.firstName} ${data.lastName}! Email: ${data.email}`);
         context.logInUser(userData);

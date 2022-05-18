@@ -74,7 +74,7 @@ class FirebaseAPI {
    * @throws object: {code: string, message: string}
    * @returns The user ID
    */
-  public async createUser (email: string, password: string): Promise<string> {
+  public async insertUser (email: string, password: string): Promise<string> {
     const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
     return userCredential.user.uid;
   }
@@ -87,7 +87,7 @@ class FirebaseAPI {
    * @throws An error string
    * @returns The written document ID
    */
-  public async saveUser (userData: FirebaseUserData): Promise<string> {
+  public async insertUserData (userData: FirebaseUserData): Promise<string> {
     const docRef = await addDoc(this.usersCollection, {
       uid: userData.uid,
       firstName: userData.firstName,
@@ -103,7 +103,7 @@ class FirebaseAPI {
    * @throws object: {code: string, message: string}
    * @returns The user ID
    */
-  public async loginUser (email: string, password: string) {
+  public async getUserId (email: string, password: string) {
     const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
     return userCredential.user.uid;
   }
@@ -114,7 +114,7 @@ class FirebaseAPI {
    * @throws An error string
    * @returns FirebaseUserData object
    */
-  public async readUser (uid: string): Promise<FirebaseUserData> {
+  public async getUserDataById (uid: string): Promise<FirebaseUserData> {
     const querySnapshot = await getDocs(
       query(
         this.usersCollection,
@@ -124,7 +124,7 @@ class FirebaseAPI {
     );
 
     if (querySnapshot.size === 0) {
-      throw new Error("User not found");
+      throw new Error("User data not found");
     }
 
     const userData = querySnapshot.docs[0].data();
@@ -158,7 +158,7 @@ class FirebaseAPI {
    * @throws An error string
    * @returns FirebaseProductData object
    */
-  public async readProduct (uid: string): Promise<FirebaseProductData> {
+  public async getProductById (uid: string): Promise<FirebaseProductData> {
     const result = await getDoc(
       doc(this.db, `${this.productsCollection.path}/${uid}`)
     );

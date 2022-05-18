@@ -54,7 +54,7 @@ export default function LoginPage(props: Props) {
     setDidSubmit(true);
 
     try {
-      uid = await FirebaseAPI.loginUser(data.email, data.password);
+      uid = await FirebaseAPI.getUserId(data.email, data.password);
     } catch (error: any) {
       console.error(error.code);
       console.error(error.message);
@@ -63,7 +63,7 @@ export default function LoginPage(props: Props) {
 
     if (uid) {
       try {
-        const userData = await FirebaseAPI.readUser(uid);
+        const userData = await FirebaseAPI.getUserDataById(uid);
         alert(`Welcome ${userData.firstName} ${userData.lastName}!`);
         context.logInUser(userData);
         navigate(RoutePath.HOME);

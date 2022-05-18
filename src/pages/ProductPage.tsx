@@ -12,7 +12,7 @@ export default function ProductPage(props: Props) {
 
   useEffect(() => {
     if (isLoading && paramProductId) {
-      FirebaseAPI.readProduct(paramProductId)
+      FirebaseAPI.getProductById(paramProductId)
         .then(response => setProductInfo(response))
         .catch(error => setError(error.message))
         .finally(() => setIsLoading(false));
