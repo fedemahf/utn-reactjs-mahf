@@ -1,15 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import { RoutePath } from "./RoutesComponent";
 
 const RegisterOrLoginItems = () => {
   const context = React.useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const logOutUser = () => {
+    context.logOutUser();
+    navigate(RoutePath.HOME);
+  }
 
   return context.isUserLoggedIn ? (
     <>
       <li>
-        <Link to="#" onClick={() => context.logOutUser()}>Log out ({context.userInfo?.firstName} {context.userInfo?.lastName})</Link>
+        <Link to="#" onClick={() => logOutUser()}>Log out</Link> ({context.userInfo?.firstName} {context.userInfo?.lastName})
       </li>
     </>
   ) : (
