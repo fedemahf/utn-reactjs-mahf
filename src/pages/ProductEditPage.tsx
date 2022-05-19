@@ -1,10 +1,11 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { RoutePath } from '../components/RoutesComponent';
 import FirebaseAPI, { FirebaseProductData } from '../services/FirebaseAPI';
 import FormInputComponent from '../components/FormInputComponent';
+import AuthContext from '../context/AuthContext';
 
 interface IFormInput {
   name: string;
@@ -15,6 +16,7 @@ interface IFormInput {
 export default function ProductEditPage() {
   const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
   const navigate = useNavigate();
+  const context = React.useContext(AuthContext);
   const { paramProductId } = useParams();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [productInfo, setProductInfo] = useState<FirebaseProductData>();
@@ -59,6 +61,10 @@ export default function ProductEditPage() {
         .finally(() => setIsLoading(false));
     }
   }, [isLoading, paramProductId]);
+
+  if (!context.isUserLoggedIn) {
+    return <Navigate to={RoutePath.LOGIN}></Navigate>;
+  }
 
   if (isLoading) {
     return <p>Loading...</p>;

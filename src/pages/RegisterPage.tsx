@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { RoutePath } from '../components/RoutesComponent';
 import AuthContext from '../context/AuthContext';
 import FirebaseAPI, { FirebaseUserData } from '../services/FirebaseAPI';
@@ -71,6 +71,10 @@ export default function RegisterPage() {
       />
     ));
   };
+
+  if (context.isUserLoggedIn) {
+    return <Navigate to={RoutePath.HOME}></Navigate>;
+  }
 
   return (
     <>

@@ -1,9 +1,10 @@
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { RoutePath } from '../components/RoutesComponent';
 import FirebaseAPI from '../services/FirebaseAPI';
 import FormInputComponent from '../components/FormInputComponent';
+import AuthContext from '../context/AuthContext';
 
 interface IFormInput {
   name: string;
@@ -14,6 +15,7 @@ interface IFormInput {
 export default function ProductAddPage() {
   const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
   const navigate = useNavigate();
+  const context = React.useContext(AuthContext);
 
   const inputs = [
     {label: 'Name', name: 'name', type: 'text'},
@@ -42,6 +44,10 @@ export default function ProductAddPage() {
       />
     ));
   };
+
+  if (!context.isUserLoggedIn) {
+    return <Navigate to={RoutePath.LOGIN}></Navigate>;
+  }
 
   return (
     <>
