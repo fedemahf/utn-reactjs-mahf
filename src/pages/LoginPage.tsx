@@ -64,7 +64,6 @@ export default function LoginPage(props: Props) {
     if (uid) {
       try {
         const userData = await FirebaseAPI.getUserDataById(uid);
-        window.alert(`Welcome ${userData.firstName} ${userData.lastName}!`);
         context.logInUser(userData);
         navigate(RoutePath.HOME);
       } catch (error) {

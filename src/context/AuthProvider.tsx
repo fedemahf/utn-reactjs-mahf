@@ -6,20 +6,29 @@ interface Props {
   children: React.ReactNode
 }
 
+const getUserInfoFromLocalStorage = (): FirebaseUserData | undefined => {
+  const userInfo = localStorage.getItem("userInfo");
+  return userInfo !== null ? JSON.parse(userInfo) : undefined;
+}
+
 export default function AuthProvider(props: Props) {
   const [loggedIn, setUserLoggedIn] = useState<boolean>(localStorage.getItem("userLoggedIn") === "1");
-  const [userInfo, setUserInfo] = useState<FirebaseUserData>(JSON.parse(localStorage.getItem("userInfo") || "{}"));
+  const [userInfo, setUserInfo] = useState<FirebaseUserData | undefined>(getUserInfoFromLocalStorage());
 
-  const logInUser = (userInfo: FirebaseUserData) => {
+  const logInUser = (inputUserInfo: FirebaseUserData) => {
     setUserLoggedIn(true);
-    setUserInfo(userInfo);
+    setUserInfo(inputUserInfo);
     localStorage.setItem("userLoggedIn", "1");
-    localStorage.setItem("userInfo", JSON.stringify(userInfo));
+    localStorage.setItem("userInfo", JSON.stringify(inputUserInfo));
+    window.alert(`Welcome, ${inputUserInfo.firstName} ${inputUserInfo.lastName}!`);
   }
 
   const logOutUser = () => {
+    window.alert(`Goodbye, ${userInfo?.firstName} ${userInfo?.lastName}!`);
     setUserLoggedIn(false);
+    setUserInfo(undefined);
     localStorage.removeItem("userLoggedIn");
+    localStorage.removeItem("userInfo");
   }
 
   return (

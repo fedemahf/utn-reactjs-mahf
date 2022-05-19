@@ -3,7 +3,7 @@ import { FirebaseUserData } from "../services/FirebaseAPI";
 
 export interface IAuth {
   isUserLoggedIn: boolean;
-  userInfo: FirebaseUserData;
+  userInfo?: FirebaseUserData;
   logInUser: (userInfo: FirebaseUserData) => void;
   logOutUser: () => void;
 }
