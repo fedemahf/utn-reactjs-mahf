@@ -51,7 +51,7 @@ export default function ProductPage(props: Props) {
     <>
       <h1>Product</h1>
       <div>
-        <p>{productInfo?.name}</p>
+        <h3>{productInfo?.name}</h3>
         <p>{productInfo?.description}</p>
         <p>Price: {productInfo?.price}</p>
         <button className="formButton">Buy</button>
