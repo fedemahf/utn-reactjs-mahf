@@ -65,10 +65,10 @@ export default function ProductEditPage(props: Props) {
       };
 
       await FirebaseAPI.editProduct(productData);
-      alert('Document updated! You are going to be redirected to the product page.');
+      window.alert('Document updated! You are going to be redirected to the product page.');
       navigate(`${RoutePath.PRODUCT}/${productInfo?.uid}`);
     } catch (error: any) {
-      alert(`Error updating product! ${error}`);
+      window.alert(`Error updating product! ${error}`);
     }
 
     setDidSubmit(false);

@@ -50,7 +50,7 @@ export default function RegisterPage(props: Props) {
 
   const onSubmit: SubmitHandler<IFormInput> = async data => {
     if (didSubmit) {
-      alert(`Form already submitted, please wait!`);
+      window.alert(`Form already submitted, please wait!`);
       return;
     }
 
@@ -62,7 +62,7 @@ export default function RegisterPage(props: Props) {
     } catch (error: any) {
       console.error(error.code);
       console.error(error.message);
-      alert(`Error creating user! ${error.message}`);
+      window.alert(`Error creating user! ${error.message}`);
     }
 
     if (uid) {
@@ -70,12 +70,12 @@ export default function RegisterPage(props: Props) {
         const userData: FirebaseUserData = { uid: uid, firstName: data.firstName, lastName: data.lastName };
         const documentId = await FirebaseAPI.insertUserData(userData);
         console.log("Document written with ID: ", documentId);
-        alert(`Registered as ${data.firstName} ${data.lastName}! Email: ${data.email}`);
+        window.alert(`Registered as ${data.firstName} ${data.lastName}! Email: ${data.email}`);
         context.logInUser(userData);
         navigate(RoutePath.HOME);
       } catch (error) {
         console.error("Error adding document: ", error);
-        alert(`Error adding document! ${error}`);
+        window.alert(`Error adding document! ${error}`);
       }
     }
 

@@ -46,7 +46,7 @@ export default function LoginPage(props: Props) {
 
   const onSubmit: SubmitHandler<IFormInput> = async data => {
     if (didSubmit) {
-      alert(`Form already submitted, please wait!`);
+      window.alert(`Form already submitted, please wait!`);
       return;
     }
 
@@ -58,17 +58,17 @@ export default function LoginPage(props: Props) {
     } catch (error: any) {
       console.error(error.code);
       console.error(error.message);
-      alert(`Error loging in! ${error.message}`);
+      window.alert(`Error loging in! ${error.message}`);
     }
 
     if (uid) {
       try {
         const userData = await FirebaseAPI.getUserDataById(uid);
-        alert(`Welcome ${userData.firstName} ${userData.lastName}!`);
+        window.alert(`Welcome ${userData.firstName} ${userData.lastName}!`);
         context.logInUser(userData);
         navigate(RoutePath.HOME);
       } catch (error) {
-        alert(`Error reading user data! ${error}`);
+        window.alert(`Error reading user data! ${error}`);
       }
     }
 
