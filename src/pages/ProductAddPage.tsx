@@ -1,18 +1,19 @@
-import { useForm, SubmitHandler } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { RoutePath } from "../components/RoutesComponent";
-import FirebaseAPI from "../services/FirebaseAPI"
-import FormInputComponent from '../components/FormInputComponent'
+import React from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { RoutePath } from '../components/RoutesComponent';
+import FirebaseAPI from '../services/FirebaseAPI';
+import FormInputComponent from '../components/FormInputComponent';
 
 interface IFormInput {
   name: string;
   description: string;
   price: number;
-};
+}
 
 export default function ProductAddPage() {
   const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const inputs = [
     {label: 'Name', name: 'name', type: 'text'},
@@ -52,5 +53,5 @@ export default function ProductAddPage() {
         </form>
       </div>
     </>
-  )
+  );
 }

@@ -1,16 +1,17 @@
+import React from 'react';
 import {
   BrowserRouter,
   Routes,
   Route,
   Navigate,
-} from "react-router-dom";
-import HomePage from "../pages/HomePage";
-import LoginPage from "../pages/LoginPage";
-import ProductAddPage from "../pages/ProductAddPage";
-import ProductEditPage from "../pages/ProductEditPage";
-import ProductPage from "../pages/ProductPage";
-import RegisterPage from "../pages/RegisterPage";
-import MenuComponent from "./MenuComponent";
+} from 'react-router-dom';
+import HomePage from '../pages/HomePage';
+import LoginPage from '../pages/LoginPage';
+import ProductAddPage from '../pages/ProductAddPage';
+import ProductEditPage from '../pages/ProductEditPage';
+import ProductPage from '../pages/ProductPage';
+import RegisterPage from '../pages/RegisterPage';
+import MenuComponent from './MenuComponent';
 
 export enum RoutePath {
   HOME = '/',
@@ -33,10 +34,10 @@ export default function RoutesComponent() {
         <Route path={`${RoutePath.PRODUCT_EDIT}/:paramProductId`} element={<ProductEditPage />} />
         <Route path={`${RoutePath.PRODUCT}/:paramProductId`} element={<ProductPage />} />
         <Route
-            path="*"
-            element={<Navigate replace to="/" />}
+          path="*"
+          element={<Navigate replace to="/" />}
         />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }

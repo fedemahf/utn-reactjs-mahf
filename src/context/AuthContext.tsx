@@ -1,5 +1,7 @@
-import React from "react"
-import { FirebaseUserData } from "../services/FirebaseAPI";
+/* eslint-disable @typescript-eslint/no-empty-function */
+
+import React from 'react';
+import { FirebaseUserData } from '../services/FirebaseAPI';
 
 export interface IAuth {
   isUserLoggedIn: boolean;
@@ -21,4 +23,4 @@ const defaultContext: IAuth = {
 
 const AuthContext = React.createContext<IAuth>(defaultContext);
 
-export default AuthContext
+export default AuthContext;

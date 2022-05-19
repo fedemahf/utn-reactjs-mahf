@@ -1,17 +1,17 @@
-import React from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { RoutePath } from "../components/RoutesComponent";
-import AuthContext from "../context/AuthContext";
-import FirebaseAPI, { FirebaseUserData } from "../services/FirebaseAPI"
-import FormInputComponent from '../components/FormInputComponent'
+import React from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { RoutePath } from '../components/RoutesComponent';
+import AuthContext from '../context/AuthContext';
+import FirebaseAPI, { FirebaseUserData } from '../services/FirebaseAPI';
+import FormInputComponent from '../components/FormInputComponent';
 
 interface IFormInput {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
-};
+}
 
 export default function RegisterPage() {
   const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
@@ -28,7 +28,7 @@ export default function RegisterPage() {
 
   const onSubmit: SubmitHandler<IFormInput> = async data => {
     if (didSubmit) {
-      window.alert(`Form already submitted, please wait!`);
+      window.alert('Form already submitted, please wait!');
       return;
     }
 
@@ -47,12 +47,12 @@ export default function RegisterPage() {
       try {
         const userData: FirebaseUserData = { uid: uid, firstName: data.firstName, lastName: data.lastName };
         const documentId = await FirebaseAPI.insertUserData(userData);
-        console.log("Document written with ID: ", documentId);
+        console.log('Document written with ID: ', documentId);
         window.alert(`Registered as ${data.firstName} ${data.lastName}! Email: ${data.email}`);
         context.logInUser(userData);
         navigate(RoutePath.HOME);
       } catch (error) {
-        console.error("Error adding document: ", error);
+        console.error('Error adding document: ', error);
         window.alert(`Error adding document! ${error}`);
       }
     }
@@ -82,5 +82,5 @@ export default function RegisterPage() {
         </form>
       </div>
     </>
-  )
+  );
 }

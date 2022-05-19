@@ -1,10 +1,10 @@
-import React from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { RoutePath } from "../components/RoutesComponent";
-import FirebaseAPI from "../services/FirebaseAPI";
-import AuthContext from '../context/AuthContext'
-import FormInputComponent from '../components/FormInputComponent'
+import React from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { RoutePath } from '../components/RoutesComponent';
+import FirebaseAPI from '../services/FirebaseAPI';
+import AuthContext from '../context/AuthContext';
+import FormInputComponent from '../components/FormInputComponent';
 
 interface IFormInput {
   email: string;
@@ -24,7 +24,7 @@ export default function LoginPage() {
 
   const onSubmit: SubmitHandler<IFormInput> = async data => {
     if (didSubmit) {
-      window.alert(`Form already submitted, please wait!`);
+      window.alert('Form already submitted, please wait!');
       return;
     }
 
@@ -74,5 +74,5 @@ export default function LoginPage() {
         </form>
       </div>
     </>
-  )
+  );
 }

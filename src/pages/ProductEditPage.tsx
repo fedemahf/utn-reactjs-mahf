@@ -1,15 +1,16 @@
-import { useEffect, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
-import { RoutePath } from "../components/RoutesComponent";
-import FirebaseAPI, { FirebaseProductData } from "../services/FirebaseAPI"
-import FormInputComponent from '../components/FormInputComponent'
+import React from 'react';
+import { useEffect, useState } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
+import { RoutePath } from '../components/RoutesComponent';
+import FirebaseAPI, { FirebaseProductData } from '../services/FirebaseAPI';
+import FormInputComponent from '../components/FormInputComponent';
 
 interface IFormInput {
   name: string;
   description: string;
   price: number;
-};
+}
 
 export default function ProductEditPage() {
   const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
@@ -95,5 +96,5 @@ export default function ProductEditPage() {
         </form>
       </div>
     </>
-  )
+  );
 }

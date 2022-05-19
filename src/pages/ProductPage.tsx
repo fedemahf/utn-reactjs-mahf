@@ -1,8 +1,9 @@
-import { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom"
-import { RoutePath } from "../components/RoutesComponent";
-import AuthContext from "../context/AuthContext";
-import FirebaseAPI, { FirebaseProductData } from "../services/FirebaseAPI";
+import React from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { RoutePath } from '../components/RoutesComponent';
+import AuthContext from '../context/AuthContext';
+import FirebaseAPI, { FirebaseProductData } from '../services/FirebaseAPI';
 
 export default function ProductPage() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -24,18 +25,18 @@ export default function ProductPage() {
 
   const onClickDeleteButton = async () => {
     if (!context.isUserLoggedIn) {
-      throw new Error("User is not logged");
+      throw new Error('User is not logged');
     }
 
     setDidDelete(true);
 
-    if (window.confirm("Are you sure?") && productInfo?.uid) {
+    if (window.confirm('Are you sure?') && productInfo?.uid) {
       await FirebaseAPI.deleteProductById(productInfo.uid);
       navigate(RoutePath.HOME);
     }
 
     setDidDelete(false);
-  }
+  };
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -63,5 +64,5 @@ export default function ProductPage() {
         }
       </div>
     </>
-  )
+  );
 }

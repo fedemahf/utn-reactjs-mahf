@@ -1,4 +1,5 @@
-import { UseFormRegisterReturn } from "react-hook-form";
+import React from 'react';
+import { UseFormRegisterReturn } from 'react-hook-form';
 
 export interface FormInputComponentProps {
   label: string;
@@ -6,7 +7,7 @@ export interface FormInputComponentProps {
   register: UseFormRegisterReturn;
   errors?: any;
   defaultValue?: string | number | readonly string[];
-};
+}
 
 export default function FormInputComponent (props: FormInputComponentProps): JSX.Element {
   return (
@@ -20,4 +21,4 @@ export default function FormInputComponent (props: FormInputComponentProps): JSX
       {props.errors?.type === 'required' && 'This input is required.'}
     </div>
   );
-};
+}

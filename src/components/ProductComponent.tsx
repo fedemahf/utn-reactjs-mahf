@@ -1,5 +1,6 @@
-import { useNavigate } from "react-router-dom";
-import { RoutePath } from "./RoutesComponent";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { RoutePath } from './RoutesComponent';
 
 interface Props {
   id: string;

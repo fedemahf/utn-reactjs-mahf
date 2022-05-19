@@ -1,7 +1,7 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import AuthContext, { IAuth } from "../context/AuthContext";
-import { RoutePath } from "./RoutesComponent";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import AuthContext, { IAuth } from '../context/AuthContext';
+import { RoutePath } from './RoutesComponent';
 
 const GuestItemsComponent = () => {
   return (
@@ -10,7 +10,7 @@ const GuestItemsComponent = () => {
       <li><Link to={RoutePath.LOGIN}>Login</Link></li>
     </>
   );
-}
+};
 
 const UserItemsComponent = (props: { context: IAuth }) => {
   const { context } = props;
@@ -23,7 +23,7 @@ const UserItemsComponent = (props: { context: IAuth }) => {
       </li>
     </>
   );
-}
+};
 
 export default function MenuComponent() {
   const context = React.useContext(AuthContext);

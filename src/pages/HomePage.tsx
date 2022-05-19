@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react"
-import { Link } from "react-router-dom";
-import ProductComponent from "../components/ProductComponent";
-import { RoutePath } from "../components/RoutesComponent";
-import FirebaseAPI from "../services/FirebaseAPI";
+import React from 'react';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import ProductComponent from '../components/ProductComponent';
+import { RoutePath } from '../components/RoutesComponent';
+import FirebaseAPI from '../services/FirebaseAPI';
 
 export default function HomePage() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -32,7 +33,7 @@ export default function HomePage() {
       <h1>Home</h1>
       {
         productList.length === 0 ? (
-          <p>There are no products to list! Why don't you <Link to={RoutePath.PRODUCT_ADD}>add one</Link>?</p>
+          <p>There are no products to list! Why don&apos;t you <Link to={RoutePath.PRODUCT_ADD}>add one</Link>?</p>
         ) : (
           productList.map(product =>
             <ProductComponent
@@ -46,5 +47,5 @@ export default function HomePage() {
         )
       }
     </>
-  )
+  );
 }

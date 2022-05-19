@@ -3,7 +3,7 @@
 import {
   FirebaseApp,
   initializeApp
-} from "firebase/app";
+} from 'firebase/app';
 
 // https://firebase.google.com/docs/auth/web/start
 import {
@@ -11,7 +11,7 @@ import {
   createUserWithEmailAndPassword,
   Auth,
   signInWithEmailAndPassword
-} from "firebase/auth";
+} from 'firebase/auth';
 
 // https://firebase.google.com/docs/firestore/quickstart
 import {
@@ -29,7 +29,7 @@ import {
   doc,
   deleteDoc,
   updateDoc
-} from "firebase/firestore";
+} from 'firebase/firestore';
 
 export interface FirebaseUserData {
   uid: string;
@@ -53,20 +53,20 @@ class FirebaseAPI {
 
   constructor () {
     const firebaseConfig = {
-      apiKey: "AIzaSyBaqHA1ZIdAraX8FCxTkSIZufKxD0vsJm0",
-      authDomain: "utn-reactjs-8ddb3.firebaseapp.com",
-      projectId: "utn-reactjs-8ddb3",
-      storageBucket: "utn-reactjs-8ddb3.appspot.com",
-      messagingSenderId: "749649779873",
-      appId: "1:749649779873:web:8ef6c4b40e57c3765ca4e0"
+      apiKey: 'AIzaSyBaqHA1ZIdAraX8FCxTkSIZufKxD0vsJm0',
+      authDomain: 'utn-reactjs-8ddb3.firebaseapp.com',
+      projectId: 'utn-reactjs-8ddb3',
+      storageBucket: 'utn-reactjs-8ddb3.appspot.com',
+      messagingSenderId: '749649779873',
+      appId: '1:749649779873:web:8ef6c4b40e57c3765ca4e0'
     };
 
     // Initialize Firebase
     this.app = initializeApp(firebaseConfig);
     this.db = getFirestore(this.app);
     this.auth = getAuth(this.app);
-    this.usersCollection = collection(this.db, "users");
-    this.productsCollection = collection(this.db, "products");
+    this.usersCollection = collection(this.db, 'users');
+    this.productsCollection = collection(this.db, 'products');
   }
 
   /**
@@ -120,13 +120,13 @@ class FirebaseAPI {
     const querySnapshot = await getDocs(
       query(
         this.usersCollection,
-        where("uid", "==", uid),
+        where('uid', '==', uid),
         limit(1)
       )
     );
 
     if (querySnapshot.size === 0) {
-      throw new Error("User data not found");
+      throw new Error('User data not found');
     }
 
     const userData = querySnapshot.docs[0].data();
@@ -160,11 +160,11 @@ class FirebaseAPI {
    * @throws An error string
    */
   public async editProduct (data: FirebaseProductData): Promise<void> {
-    const productDocument = doc(this.db, `${this.productsCollection.path}/${data.uid}`)
+    const productDocument = doc(this.db, `${this.productsCollection.path}/${data.uid}`);
     const result = await getDoc(productDocument);
 
     if (!result.exists()) {
-      throw new Error("Product not found");
+      throw new Error('Product not found');
     }
 
     await updateDoc(productDocument, {
@@ -186,7 +186,7 @@ class FirebaseAPI {
     );
 
     if (!result.exists()) {
-      throw new Error("Product not found");
+      throw new Error('Product not found');
     }
 
     const userData = result.data();
@@ -228,7 +228,7 @@ class FirebaseAPI {
         description: docData.description,
         price: docData.price
       });
-    })
+    });
 
     return products;
   }
