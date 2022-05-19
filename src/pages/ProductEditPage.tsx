@@ -51,7 +51,7 @@ export default function ProductEditPage(props: Props) {
 
   const onSubmit: SubmitHandler<IFormInput> = async data => {
     if (!productInfo) {
-      throw new Error("There is not product info");
+      throw new Error('Product info not found');
     }
 
     setDidSubmit(true);
@@ -63,7 +63,6 @@ export default function ProductEditPage(props: Props) {
         description: data.description,
         price: data.price
       };
-
       await FirebaseAPI.editProduct(productData);
       window.alert('Document updated! You are going to be redirected to the product page.');
       navigate(`${RoutePath.PRODUCT}/${productInfo?.uid}`);
@@ -91,10 +90,15 @@ export default function ProductEditPage(props: Props) {
     return <p>Error: {error}</p>;
   }
 
+  if (!productInfo) {
+    return <p>Error: Product info not loaded</p>;
+  }
+
   return (
     <>
-      <h1>Add Product</h1>
+      <h1>Edit Product</h1>
       <div>
+        <h3>{productInfo.name}</h3>
         <form onSubmit={handleSubmit(onSubmit)}>
           {
             inputs.map((input: any) => (
@@ -102,13 +106,13 @@ export default function ProductEditPage(props: Props) {
                 key={input.name}
                 label={input.label}
                 type={input.type}
-                defaultValue={productInfo?.[input.name as keyof FirebaseProductData]}
+                defaultValue={productInfo[input.name as keyof FirebaseProductData]}
                 register={{...register(input.name, { required: true })}}
                 errors={errors[input.name as keyof typeof errors]}
               />
             ))
           }
-          <button className="formButton" type="button" onClick={() => navigate(`${RoutePath.PRODUCT}/${productInfo?.uid}`)}>Cancel</button>
+          <button className="formButton" type="button" onClick={() => navigate(`${RoutePath.PRODUCT}/${productInfo.uid}`)}>Cancel</button>
           {' '}
           <button className="formButton" type="submit" disabled={didSubmit}>Save</button>
         </form>
