@@ -17,7 +17,7 @@ All data must persist in database. The use of Firebase is optional. You can deve
 
 - Single Page Application
 - Firebase for data persistency
-- Local Storage local session persistency
+- Local Storage for local session persistency
 - Simple and minimal CSS
 
 ## Available Scripts
