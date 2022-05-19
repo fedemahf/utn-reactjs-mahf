@@ -13,9 +13,7 @@ interface IFormInput {
   password: string;
 };
 
-interface Props {}
-
-export default function RegisterPage(props: Props) {
+export default function RegisterPage() {
   const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
   const navigate = useNavigate();
   const [didSubmit, setDidSubmit] = React.useState<boolean>(false);

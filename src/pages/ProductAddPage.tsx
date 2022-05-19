@@ -10,9 +10,7 @@ interface IFormInput {
   price: number;
 };
 
-interface Props {}
-
-export default function ProductAddPage(props: Props) {
+export default function ProductAddPage() {
   const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
   let navigate = useNavigate();
 

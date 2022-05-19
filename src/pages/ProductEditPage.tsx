@@ -11,9 +11,7 @@ interface IFormInput {
   price: number;
 };
 
-interface Props {}
-
-export default function ProductEditPage(props: Props) {
+export default function ProductEditPage() {
   const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
   const navigate = useNavigate();
   const { paramProductId } = useParams();

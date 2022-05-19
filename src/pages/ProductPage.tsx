@@ -4,9 +4,7 @@ import { RoutePath } from "../components/RoutesComponent";
 import AuthContext from "../context/AuthContext";
 import FirebaseAPI, { FirebaseProductData } from "../services/FirebaseAPI";
 
-interface Props {}
-
-export default function ProductPage(props: Props) {
+export default function ProductPage() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [productInfo, setProductInfo] = useState<FirebaseProductData>();
   const [error, setError] = useState<string>('');

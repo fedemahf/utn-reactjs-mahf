@@ -4,9 +4,7 @@ import ProductComponent from "../components/ProductComponent";
 import { RoutePath } from "../components/RoutesComponent";
 import FirebaseAPI from "../services/FirebaseAPI";
 
-interface Props {}
-
-export default function HomePage(props: Props) {
+export default function HomePage() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [productList, setProductList] = useState<Array<any>>([]);
   const [error, setError] = useState<string>('');

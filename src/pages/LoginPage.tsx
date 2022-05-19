@@ -6,14 +6,12 @@ import FirebaseAPI from "../services/FirebaseAPI";
 import AuthContext from '../context/AuthContext'
 import FormInputComponent from '../components/FormInputComponent'
 
-interface Props {}
-
 interface IFormInput {
   email: string;
   password: string;
 }
 
-export default function LoginPage(props: Props) {
+export default function LoginPage() {
   const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
   const navigate = useNavigate();
   const context = React.useContext(AuthContext);

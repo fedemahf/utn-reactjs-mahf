@@ -12,8 +12,6 @@ import ProductPage from "../pages/ProductPage";
 import RegisterPage from "../pages/RegisterPage";
 import MenuComponent from "./MenuComponent";
 
-interface Props {}
-
 export enum RoutePath {
   HOME = '/',
   REGISTER = '/register',
@@ -23,7 +21,7 @@ export enum RoutePath {
   PRODUCT = '/product',
 }
 
-export default function RoutesComponent(props: Props) {
+export default function RoutesComponent() {
   return (
     <BrowserRouter>
       <MenuComponent />
