@@ -1,33 +1,13 @@
-import { useForm, SubmitHandler, UseFormRegisterReturn } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { RoutePath } from "../components/RoutesComponent";
 import FirebaseAPI from "../services/FirebaseAPI"
+import FormInputComponent from '../components/FormInputComponent'
 
 interface IFormInput {
   name: string;
   description: string;
   price: number;
-};
-
-interface FormInputComponentProps {
-  label: string;
-  type?: string;
-  register: UseFormRegisterReturn;
-  errors?: any;
-};
-
-const FormInputComponent = (props: FormInputComponentProps): JSX.Element => {
-  return (
-    <div>
-      <label>
-        {props.label}
-        &nbsp;
-        <input className="formInput" type={props.type} {...props.register} />
-      </label>
-      &nbsp;
-      {props.errors?.type === 'required' && 'This input is required.'}
-    </div>
-  );
 };
 
 interface Props {}
