@@ -54,7 +54,7 @@ export default function ProductPage(props: Props) {
         <h3>{productInfo?.name}</h3>
         <p>{productInfo?.description}</p>
         <p>Price: {productInfo?.price}</p>
-        <button className="formButton">Buy</button>
+        <button className="formButton" disabled>Buy</button>
         {
           context.isUserLoggedIn && (
             <>

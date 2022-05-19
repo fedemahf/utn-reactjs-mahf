@@ -18,9 +18,8 @@ export default function ProductComponent(props: Props) {
         <p>{props.description}</p>
         <p>Price: {props.price}</p>
         <p>
-          <button className="formButton">Buy</button>
-          &nbsp;
-          <button className="formButton" onClick={() => navigate(`${RoutePath.PRODUCT}/${props.id}`)}>Details</button>
+          <button className="formButton" disabled>Buy</button>
+          {' '}<button className="formButton" onClick={() => navigate(`${RoutePath.PRODUCT}/${props.id}`)}>Details</button>
         </p>
       </div>
     </>
