@@ -31,7 +31,7 @@ export default function ProductPage(props: Props) {
 
     setDidDelete(true);
 
-    if (productInfo?.uid) {
+    if (window.confirm("Are you sure?") && productInfo?.uid) {
       await FirebaseAPI.deleteProductById(productInfo.uid);
       navigate(RoutePath.HOME);
     }
