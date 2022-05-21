@@ -20,6 +20,23 @@ All data must persist in database. The use of Firebase is optional. You can deve
 - Local Storage for local session persistency
 - Simple and minimal CSS
 
+## Configuration
+
+In order for this App to run, you need to set the proper environment variables for the Firebase project.
+
+It can be done in a `.env` file inside the root directory. See [.env.example](.env.example) for an example and [Adding Custom Variables](https://create-react-app.dev/docs/adding-custom-environment-variables/) in the Create React App documentation for more information.
+
+### Example environment configuration
+
+```
+REACT_APP_FIREBASE_API_KEY=AIzaSyBaqHA1ZIdAraX8FCxTkSIZufKxD0vsJm0
+REACT_APP_FIREBASE_AUTH_DOMAIN=utn-reactjs-8ddb3.firebaseapp.com
+REACT_APP_FIREBASE_PROJECT_ID=utn-reactjs-8ddb3
+REACT_APP_FIREBASE_STORAGE_BUCKET=utn-reactjs-8ddb3.appspot.com
+REACT_APP_FIREBASE_MESSAGERING_SENDER_ID=749649779873
+REACT_APP_FIREBASE_APP_ID=1:749649779873:web:8ef6c4b40e57c3765ca4e0
+```
+
 ## Available Scripts
 
 In the project directory, you can run:
