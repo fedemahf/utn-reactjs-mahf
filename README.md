@@ -24,6 +24,8 @@ All data must persist in database. The use of Firebase is optional. You can deve
 
 ## Configuration
 
+A Firebase project with the Firestore Database module, the Authentication module and the Email/Password Sign-in provider enabled is required.
+
 In order for this App to run, you need to set the proper environment variables for the Firebase project.
 
 It can be done in a `.env` file inside the root directory. See [.env.example](.env.example) for an example and [Adding Custom Variables](https://create-react-app.dev/docs/adding-custom-environment-variables/) in the Create React App documentation for more information.
