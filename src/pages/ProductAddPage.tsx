@@ -16,6 +16,7 @@ export default function ProductAddPage() {
   const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
   const navigate = useNavigate();
   const context = React.useContext(AuthContext);
+  const [didSubmit, setDidSubmit] = React.useState<boolean>(false);
 
   const inputs = [
     {label: 'Name', name: 'name', type: 'text'},
@@ -24,13 +25,22 @@ export default function ProductAddPage() {
   ];
 
   const onSubmit: SubmitHandler<IFormInput> = async data => {
+    if (didSubmit) {
+      window.alert('Form already submitted, please wait!');
+      return;
+    }
+
+    setDidSubmit(true);
+
     try {
       const documentId = await FirebaseAPI.saveProduct(data);
-      window.alert('Document created! You are going to be redirected to the product page.');
+      window.alert('Product created! You are going to be redirected to the product page.');
       navigate(`${RoutePath.PRODUCT}/${documentId}`);
     } catch (error: any) {
-      window.alert(`Error saving product! ${error}`);
+      window.alert(`Error creating product! ${error}`);
     }
+
+    setDidSubmit(false);
   };
 
   const renderInputs = () => {
@@ -55,7 +65,7 @@ export default function ProductAddPage() {
       <div>
         <form onSubmit={handleSubmit(onSubmit)}>
           {renderInputs()}
-          <button className="formButton" type="submit">Add</button>
+          <button className="formButton" type="submit" disabled={didSubmit}>Add</button>
         </form>
       </div>
     </>

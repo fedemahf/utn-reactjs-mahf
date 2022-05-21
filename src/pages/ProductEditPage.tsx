@@ -34,6 +34,11 @@ export default function ProductEditPage() {
       throw new Error('Product info not found');
     }
 
+    if (didSubmit) {
+      window.alert('Form already submitted, please wait!');
+      return;
+    }
+
     setDidSubmit(true);
 
     try {
@@ -44,7 +49,7 @@ export default function ProductEditPage() {
         price: data.price
       };
       await FirebaseAPI.editProduct(productData);
-      window.alert('Document updated! You are going to be redirected to the product page.');
+      window.alert('Product updated! You are going to be redirected to the product page.');
       navigate(`${RoutePath.PRODUCT}/${productInfo?.uid}`);
     } catch (error: any) {
       window.alert(`Error updating product! ${error}`);
